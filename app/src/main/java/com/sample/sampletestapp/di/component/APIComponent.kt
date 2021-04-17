@@ -6,7 +6,7 @@ import com.sample.sampletestapp.network.api.UsersAPI
 import dagger.Component
 
 @Component(modules = [APIModule::class])
-interface PhotoAPIComponent {
+interface APIComponent {
 
     val photoAPI: PhotoAPI
     val userAPI: UsersAPI
