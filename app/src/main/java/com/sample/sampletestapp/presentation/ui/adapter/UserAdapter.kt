@@ -1,5 +1,7 @@
 package com.sample.sampletestapp.presentation.ui.adapter
 
+import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.sample.sampletestapp.R
 import com.sample.sampletestapp.network.model.User
+import com.sample.sampletestapp.presentation.ui.activity.PhotoActivity
+import kotlinx.android.synthetic.main.view_user_list_item.view.*
 
 class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
 
     private var userList: List<User>? = null
 
-    @BindView(R.id.user_list_item_id)
+    @BindView(R.id.user_list_item_ID)
     var textViewID: TextView? = null
     @BindView(R.id.user_list_item_name)
     var textViewName: TextView? = null
@@ -32,13 +36,17 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        userList?.get(position)?.let { bindData(it) }
+       // userList?.get(position)?.let { bindData(it) }
+        userList?.get(position)?.let { holder.check(it) }
         holder.itemView.setOnClickListener { view ->
-            Toast.makeText(
-                view.context,
-                "Clicked Recycler View + BindViewHolder",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                view.context,
+//                "Clicked Recycler View + BindViewHolder",
+//                Toast.LENGTH_SHORT
+//            ).show()
+            val activity = holder.itemView.context as Activity
+            val intent = Intent(activity, PhotoActivity::class.java)
+            view.context.startActivity(intent)
         }
     }
 
@@ -61,6 +69,12 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
         private var view: View = v
         private var photo: User? = null
 
+        fun check(user : User){
+            view.user_list_item_ID.text = user.id.toString()
+            view.user_list_item_email.text = user.email
+            view.user_list_item_phone.text = user.phone
+            view.user_list_item_name.text = user.name
+        }
 
         //3
         init {

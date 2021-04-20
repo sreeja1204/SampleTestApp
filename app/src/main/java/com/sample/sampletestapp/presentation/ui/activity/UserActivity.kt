@@ -26,16 +26,20 @@ import kotlin.collections.ArrayList
 class UserActivity() : AppCompatActivity(), Callback<List<User>>, SwipeRefreshLayout.OnRefreshListener,
     Parcelable {
 
-    @BindView(R.id.user_list_help_text)
-    internal var helpTextView: TextView? = null
-    @BindView(R.id.user_list_recycler_view)
-    internal var userRecyclerView: RecyclerView? = null
-    @BindView(R.id.user_list_swipe_refresh_layout)
-    internal var swipeRefreshLayout: SwipeRefreshLayout? = null
+//    @BindView(R.id.user_list_help_text)
+//    internal var helpTextView: TextView? = null
+//    @BindView(R.id.user_list_recycler_view)
+//    internal var userRecyclerView: RecyclerView? = null
+//    @BindView(R.id.user_list_swipe_refresh_layout)
+//    internal var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     private var userAdapter: UserAdapter? = null
     private var APIComponent: APIComponent? = null
     private var userList: List<User>? = null
+
+    private lateinit var helpTextView: TextView
+    private lateinit var userRecyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onRefresh() {
         getData()    }
@@ -58,6 +62,9 @@ class UserActivity() : AppCompatActivity(), Callback<List<User>>, SwipeRefreshLa
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.activity_user)
         ButterKnife.bind(this)
+        helpTextView = findViewById(R.id.user_list_help_text)
+        userRecyclerView = findViewById(R.id.user_list_recycler_view)
+        swipeRefreshLayout = findViewById(R.id.user_list_swipe_refresh_layout)
         userList = arrayListOf()
         userAdapter = UserAdapter()
         userRecyclerView?.setLayoutManager(LinearLayoutManager(this))

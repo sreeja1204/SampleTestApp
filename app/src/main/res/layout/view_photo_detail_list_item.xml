@@ -11,33 +11,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <TextView
-            android:id="@+id/user_list_item_ID"
+            android:id="@+id/photo_detail_list_item_albumid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/dummy_text_small"
             style="@style/ListItemTitle"
             android:gravity="center_horizontal"/>
 
-        <TextView
-            android:id="@+id/user_list_item_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/dummy_text_small"
-            style="@style/ListItemTitle"
-            android:gravity="center_horizontal"/>
+        <ImageView
+            android:id="@+id/photo_detail_list_item_image"
+            android:layout_width="600dp"
+            android:layout_height="600dp"
+            app:srcCompat="@drawable/img_placeholder_600px" />
 
         <TextView
-            android:id="@+id/user_list_item_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="@string/dummy_text_small"
-            style="@style/ListItemTitle"
-            android:gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/user_list_item_phone"
+            android:id="@+id/photo_detail_list_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/dummy_text_small"
