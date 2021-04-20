@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import com.sample.sampletestapp.R
@@ -36,14 +35,8 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-       // userList?.get(position)?.let { bindData(it) }
         userList?.get(position)?.let { holder.check(it) }
         holder.itemView.setOnClickListener { view ->
-//            Toast.makeText(
-//                view.context,
-//                "Clicked Recycler View + BindViewHolder",
-//                Toast.LENGTH_SHORT
-//            ).show()
             val activity = holder.itemView.context as Activity
             val intent = Intent(activity, PhotoActivity::class.java)
             view.context.startActivity(intent)
@@ -65,9 +58,7 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     }
 
     class UserHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        //2
         private var view: View = v
-        private var photo: User? = null
 
         fun check(user : User){
             view.user_list_item_ID.text = user.id.toString()
@@ -76,19 +67,12 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
             view.user_list_item_name.text = user.name
         }
 
-        //3
         init {
             v.setOnClickListener(this)
         }
 
-        //4
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
-        }
-
-        companion object {
-            //5
-            private val PHOTO_KEY = "PHOTO"
         }
     }
 

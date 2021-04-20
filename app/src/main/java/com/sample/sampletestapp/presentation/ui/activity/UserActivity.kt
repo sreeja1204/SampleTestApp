@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import butterknife.BindView
 import butterknife.ButterKnife
 import com.sample.sampletestapp.R
 import com.sample.sampletestapp.di.component.APIComponent
@@ -21,17 +20,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import kotlin.collections.ArrayList
 
 class UserActivity() : AppCompatActivity(), Callback<List<User>>, SwipeRefreshLayout.OnRefreshListener,
     Parcelable {
-
-//    @BindView(R.id.user_list_help_text)
-//    internal var helpTextView: TextView? = null
-//    @BindView(R.id.user_list_recycler_view)
-//    internal var userRecyclerView: RecyclerView? = null
-//    @BindView(R.id.user_list_swipe_refresh_layout)
-//    internal var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     private var userAdapter: UserAdapter? = null
     private var APIComponent: APIComponent? = null
@@ -75,8 +66,6 @@ class UserActivity() : AppCompatActivity(), Callback<List<User>>, SwipeRefreshLa
         APIComponent = DaggerAPIComponent.builder().aPIModule(APIModule()).build()
 
         getData();
-
-        //return view
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
