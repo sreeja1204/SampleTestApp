@@ -35,7 +35,7 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        userList?.get(position)?.let { holder.check(it) }
+        userList?.get(position)?.let { holder.bindData(it) }
         holder.itemView.setOnClickListener { view ->
             val activity = holder.itemView.context as Activity
             val intent = Intent(activity, PhotoActivity::class.java)
@@ -60,11 +60,11 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     class UserHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
 
-        fun check(user : User){
-            view.user_list_item_ID.text = user.id.toString()
-            view.user_list_item_email.text = user.email
-            view.user_list_item_phone.text = user.phone
-            view.user_list_item_name.text = user.name
+        fun bindData(user : User){
+            view.user_list_item_ID.text = "ID : "+user.id.toString()
+            view.user_list_item_email.text = "Email :"+user.email
+            view.user_list_item_phone.text = "Phone :"+user.phone
+            view.user_list_item_name.text = "Name :"+user.name
         }
 
         init {

@@ -26,8 +26,9 @@ class PhotoDetailActivity : AppCompatActivity() {
         val size = intent.getIntExtra("size",0)
         val albumid = intent.getIntExtra("albumId",0)
         val position = intent.getIntExtra("position",0)
+        val photoId = intent.getIntExtra("photoId",0)
 
-        photodetailAdapter = PhotoDetailAdapter(url, name, size, albumid, position)
+        photodetailAdapter = PhotoDetailAdapter(url, name, size, albumid, position,photoId)
         photodetailRecyclerView?.setLayoutManager(LinearLayoutManager(this))
         photodetailRecyclerView?.setAdapter(photodetailAdapter)
     }

@@ -17,7 +17,7 @@ import android.graphics.Bitmap
 import java.net.URL
 
 
-class PhotoDetailAdapter(val url: String, val title: String, val size: Int, val albumId: Int, val position: Int) : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetailHolder>()  {
+class PhotoDetailAdapter(val url: String, val title: String, val size: Int, val albumId: Int, val position: Int, val photoId: Int) : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetailHolder>()  {
 
 
     @BindView(R.id.photo_detail_list_item_image)
@@ -27,7 +27,7 @@ class PhotoDetailAdapter(val url: String, val title: String, val size: Int, val 
 
 
     override fun onBindViewHolder(holder: PhotoDetailHolder, position: Int) {
-        position.let { holder.bindData(title, url, albumId) }
+        position.let { holder.bindData(title, url, albumId, photoId) }
         holder.itemView.setOnClickListener { view ->
             Toast.makeText(
                 view.context,
@@ -50,8 +50,9 @@ class PhotoDetailAdapter(val url: String, val title: String, val size: Int, val 
    inner class PhotoDetailHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
 
-        fun bindData(title: String, url: String, albumId: Int){
-            view.photo_detail_list_item_albumid.text = albumId.toString()
+        fun bindData(title: String, url: String, albumId: Int, photoId: Int){
+            view.photo_detail_list_item_photoid.text = "Photo ID :"+photoId.toString()
+            view.photo_detail_list_item_albumid.text = "Album ID :"+albumId.toString()
             view.photo_detail_list_item_title.text = title
             DownloadImageForFullImage(view.photo_detail_list_item_image).execute(url)
 

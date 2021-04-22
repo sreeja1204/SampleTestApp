@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.AsyncTask
-import android.provider.Settings.Global.getString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
-import butterknife.ButterKnife
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.sample.sampletestapp.R
 import com.sample.sampletestapp.network.model.Photo
-import com.sample.sampletestapp.presentation.ui.activity.PhotoActivity
 import com.sample.sampletestapp.presentation.ui.activity.PhotoDetailActivity
 import kotlinx.android.synthetic.main.view_photo_list_item.view.*
 import java.net.URL
@@ -40,7 +34,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
     }
 
     override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
-        photoList?.get(position)?.let { holder.check(it) }
+        photoList?.get(position)?.let { holder.bindData(it) }
         holder.itemView.setOnClickListener { view ->
             val activity = holder.itemView.context as Activity
             val intent = Intent(activity, PhotoDetailActivity::class.java)
@@ -49,6 +43,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
             intent.putExtra("size", photoList?.size)
             intent.putExtra("albumId", photoList?.get(position)?.albumId)
             intent.putExtra("position",position)
+            intent.putExtra("photoId",photoList?.get(position)?.id)
             view.context.startActivity(intent)
         }
     }
@@ -72,7 +67,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
 
 
 
-        fun check(photo : Photo){
+        fun bindData(photo : Photo){
             view.photo_list_item_title.text = photo.title
             DownloadImageFromThumbnail(view.photo_list_item_image).execute(photo.thumbnailUrl)
 
