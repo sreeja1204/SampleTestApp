@@ -17,28 +17,16 @@ import android.graphics.Bitmap
 import java.net.URL
 
 
-class PhotoDetailAdapter(val url: String, val title: String, val size: Int, val albumId: Int, val position: Int, val photoId: Int) : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetailHolder>()  {
+class PhotoDetailAdapter(val url: String, val title: String, val albumId: Int, val photoId: Int) : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetailHolder>()  {
 
-
-    @BindView(R.id.photo_detail_list_item_image)
-    var imageView: ImageView? = null
-    @BindView(R.id.photo_detail_list_item_title)
-    var textView: TextView? = null
-
+    val size: Int = 1
 
     override fun onBindViewHolder(holder: PhotoDetailHolder, position: Int) {
         position.let { holder.bindData(title, url, albumId, photoId) }
-        holder.itemView.setOnClickListener { view ->
-            Toast.makeText(
-                view.context,
-                "Clicked Recycler View + BindViewHolder PhotoDetail",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     override fun getItemCount(): Int {
-        return 1
+        return size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoDetailHolder {

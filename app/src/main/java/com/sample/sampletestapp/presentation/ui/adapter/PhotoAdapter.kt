@@ -24,15 +24,6 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
 
     private var photoList: List<Photo>? = null
 
-    @BindView(R.id.photo_list_item_image)
-    var imageView: ImageView? = null
-    @BindView(R.id.photo_list_item_title)
-    var textView: TextView? = null
-
-    private fun bindData(photo: Photo) {
-        textView?.text ?: photo.title;
-    }
-
     override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
         photoList?.get(position)?.let { holder.bindData(it) }
         holder.itemView.setOnClickListener { view ->
@@ -40,9 +31,7 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
             val intent = Intent(activity, PhotoDetailActivity::class.java)
             intent.putExtra("url",photoList?.get(position)?.url)
             intent.putExtra("title",photoList?.get(position)?.title)
-            intent.putExtra("size", photoList?.size)
             intent.putExtra("albumId", photoList?.get(position)?.albumId)
-            intent.putExtra("position",position)
             intent.putExtra("photoId",photoList?.get(position)?.id)
             view.context.startActivity(intent)
         }
@@ -64,26 +53,19 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
 
     inner class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
-
-
-
         fun bindData(photo : Photo){
             view.photo_list_item_title.text = photo.title
             DownloadImageFromThumbnail(view.photo_list_item_image).execute(photo.thumbnailUrl)
-
-
         }
         init {
             v.setOnClickListener(this)
         }
 
-        //4
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
         }
 
     }
-
 
     private inner class DownloadImageFromThumbnail(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
         init {
