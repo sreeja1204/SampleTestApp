@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sample.sampletestapp.BR
 import com.sample.sampletestapp.R
+import com.sample.sampletestapp.databinding.ViewUserListItemBinding
 import com.sample.sampletestapp.network.model.User
 import com.sample.sampletestapp.presentation.ui.activity.PhotoActivity
 import kotlinx.android.synthetic.main.view_user_list_item.view.*
@@ -30,28 +32,22 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_user_list_item, parent, false)
-        return UserHolder(view)    }
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ViewUserListItemBinding.inflate(layoutInflater)
+        return UserHolder(binding)
+    }
 
     fun updateList(userList: List<User>) {
         this.userList = userList
-        this.notifyDataSetChanged()
     }
 
-    class UserHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        private var view: View = v
+    class UserHolder(val binding: ViewUserListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         fun bindData(user : User){
-            view.user_list_item_ID.text = "ID : "+user.id.toString()
-            view.user_list_item_email.text = "Email :"+user.email
-            view.user_list_item_phone.text = "Phone :"+user.phone
-            view.user_list_item_name.text = "Name :"+user.name
+            binding.user = user
+            binding.executePendingBindings()
         }
 
-        init {
-            v.setOnClickListener(this)
-        }
 
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")

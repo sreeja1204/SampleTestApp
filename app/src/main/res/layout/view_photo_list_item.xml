@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+        name="photo"
+        type="com.sample.sampletestapp.network.model.Photo" />
+        </data>
+
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/margin_normal">
 
     <LinearLayout
@@ -17,16 +25,17 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:padding="10dp"
-            app:srcCompat="@drawable/img_placeholder_600px" />
+            app:loadImage='@{photo.thumbnailUrl}' />
 
         <TextView
             android:id="@+id/photo_list_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/dummy_text_small"
+           android:text='@{photo.title}'
             style="@style/ListItemTitle"
             android:gravity="center_horizontal"/>
 
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+</layout>

@@ -12,9 +12,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
+import com.bumptech.glide.Glide
 import com.sample.sampletestapp.R
+import com.sample.sampletestapp.databinding.ViewPhotoListItemBinding
+import com.sample.sampletestapp.databinding.ViewUserListItemBinding
 import com.sample.sampletestapp.network.model.Photo
 import com.sample.sampletestapp.presentation.ui.activity.PhotoDetailActivity
 import kotlinx.android.synthetic.main.view_photo_list_item.view.*
@@ -42,23 +46,30 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_photo_list_item, parent, false)
-        return PhotoHolder(view)    }
+//        val view = LayoutInflater.from(parent.context)
+//            .inflate(R.layout.view_photo_list_item, parent, false)
+//        return PhotoHolder(view)
+
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ViewPhotoListItemBinding.inflate(layoutInflater)
+        return PhotoHolder(binding)
+
+    }
 
     fun updateList(photoList: List<Photo>) {
         this.photoList = photoList
         this.notifyDataSetChanged()
     }
 
-    inner class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        private var view: View = v
+    inner class PhotoHolder(val binding: ViewPhotoListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
         fun bindData(photo : Photo){
-            view.photo_list_item_title.text = photo.title
-            DownloadImageFromThumbnail(view.photo_list_item_image).execute(photo.thumbnailUrl)
+            binding.photo = photo
+            binding.executePendingBindings()
+            //DownloadImageFromThumbnail(view.photo_list_item_image).execute(photo.thumbnailUrl)
         }
         init {
-            v.setOnClickListener(this)
+           // v.setOnClickListener(this)
         }
 
         override fun onClick(v: View) {
@@ -67,7 +78,23 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
 
     }
 
-    private inner class DownloadImageFromThumbnail(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
+    companion object {
+        @JvmStatic
+        @BindingAdapter("loadImage")
+        fun loadImage(thubmImage: ImageView, url: String) {
+            DownloadImageFromThumbnail(thubmImage).execute(url)
+//            Glide.with(thubmImage)
+//                .load(url)
+//                .circleCrop()
+//                .placeholder(R.drawable.ic_launcher_foreground)
+//                .error(R.drawable.ic_launcher_foreground)
+//                .fallback(R.drawable.ic_launcher_foreground)
+//                .into(thubmImage)
+        }
+
+    }
+
+    private class DownloadImageFromThumbnail(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
         init {
             Toast.makeText(imageView.context, "Please wait, it may take a few minute...",     Toast.LENGTH_SHORT).show()
         }
