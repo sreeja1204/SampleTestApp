@@ -33,8 +33,8 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
         holder.itemView.setOnClickListener { view ->
             val activity = holder.itemView.context as Activity
             val intent = Intent(activity, PhotoDetailActivity::class.java)
-            intent.putExtra("url",photoList?.get(position)?.url)
-            intent.putExtra("title",photoList?.get(position)?.title)
+            //intent.putExtra("url",photoList?.get(position)?.url)
+            //intent.putExtra("title",photoList?.get(position)?.title)
             intent.putExtra("albumId", photoList?.get(position)?.albumId)
             intent.putExtra("photoId",photoList?.get(position)?.id)
             view.context.startActivity(intent)

@@ -14,52 +14,82 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import kotlinx.android.synthetic.main.view_photo_detail_list_item.view.*
 import android.graphics.Bitmap
+import androidx.databinding.BindingAdapter
+import com.sample.sampletestapp.databinding.ActivityPhotoDetail2Binding
+import com.sample.sampletestapp.databinding.ViewPhotoDetailListItemBinding
+import com.sample.sampletestapp.databinding.ViewPhotoListItemBinding
+import com.sample.sampletestapp.network.model.Photo
 import java.net.URL
 
 
-class PhotoDetailAdapter(val url: String, val title: String, val albumId: Int, val photoId: Int) : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetailHolder>()  {
+class PhotoDetailAdapter() : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetailHolder>()  {
 
     val size: Int = 1
+    private var photoList: List<Photo>? = null
 
     override fun onBindViewHolder(holder: PhotoDetailHolder, position: Int) {
-        position.let { holder.bindData(title, url, albumId, photoId) }
+        photoList?.get(position)?.let { holder.bindData(it) }
     }
 
     override fun getItemCount(): Int {
         return size
     }
 
+    fun updateList(photoList: List<Photo>) {
+        this.photoList = photoList
+        //this.notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoDetailHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_photo_detail_list_item, parent, false)
+//        val view = LayoutInflater.from(parent.context)
+//            .inflate(R.layout.view_photo_detail_list_item, parent, false)
+//
+//            return PhotoDetailHolder(view)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ViewPhotoDetailListItemBinding.inflate(layoutInflater)
+        return PhotoDetailHolder(binding)
+           }
 
-            return PhotoDetailHolder(view)    }
+   inner class PhotoDetailHolder(val binding: ViewPhotoDetailListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-   inner class PhotoDetailHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
-        private var view: View = v
+        fun bindData(photo:Photo){
+            binding.photo = photo
+            binding.executePendingBindings()
+            //view.photo_detail_list_item_title.text = title
+            //DownloadImageForFullImage(view.photo_detail_list_item_image).execute(url)
 
-        fun bindData(title: String, url: String, albumId: Int, photoId: Int){
-            view.photo_detail_list_item_photoid.text = "Photo ID :"+photoId.toString()
-            view.photo_detail_list_item_albumid.text = "Album ID :"+albumId.toString()
-            view.photo_detail_list_item_title.text = title
-            DownloadImageForFullImage(view.photo_detail_list_item_image).execute(url)
-
-        }
-        init {
-            v.setOnClickListener(this)
-        }
+       }
+//        init {
+//            v.setOnClickListener(this)
+//        }
 
         override fun onClick(v: View) {
             Log.d("RecyclerView", "CLICK!")
         }
     }
 
+    companion object {
+        @JvmStatic
+        @BindingAdapter("loadImage")
+        fun loadImage(thubmImage: ImageView, url: String?) {
+            DownloadImageForFullImage(thubmImage).execute(url)
+//            Glide.with(thubmImage)
+//                .load(url)
+//                .circleCrop()
+//                .placeholder(R.drawable.ic_launcher_foreground)
+//                .error(R.drawable.ic_launcher_foreground)
+//                .fallback(R.drawable.ic_launcher_foreground)
+//                .into(thubmImage)
+        }
 
-    private inner class DownloadImageForFullImage(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
+    }
+
+
+    private class DownloadImageForFullImage(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
         init {
             Toast.makeText(imageView.context, "Please wait, it may take a few minute...",     Toast.LENGTH_SHORT).show()
         }
-        override fun doInBackground(vararg urls: String): Bitmap? {
+        override fun doInBackground(vararg urls: String?): Bitmap? {
             val imageURL = urls[0]
             var image: Bitmap? = null
             try {
