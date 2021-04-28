@@ -23,7 +23,6 @@ class PhotoDetailActivity : AppCompatActivity() {
         val intent = intent
         val albumid = intent.getIntExtra("albumId",0)
         val photoId = intent.getIntExtra("photoId",0)
-
         val viewModel = makeAPICall(albumid,photoId)
         setupBinding(viewModel)
     }

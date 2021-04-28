@@ -20,12 +20,6 @@ class PhotoActivityTest {
     fun setup(){
         val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
         val intent = Intent(targetContext, PhotoActivity::class.java)
-        intent.putExtra("url","https://via.placeholder.com/600/92c952")
-        intent.putExtra("title","accusamus beatae ad facilis cum similique qui sunt")
-        intent.putExtra("size", 5000)
-        intent.putExtra("albumId", 1)
-        intent.putExtra("position",1)
-        intent.putExtra("photoId",1)
         activityRule.launchActivity(intent)
         activityRule.activity
     }

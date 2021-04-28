@@ -2,9 +2,6 @@ package com.sample.sampletestapp.presentation.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sample.sampletestapp.di.component.APIComponent
-import com.sample.sampletestapp.di.component.DaggerAPIComponent
-import com.sample.sampletestapp.di.module.APIModule
 import com.sample.sampletestapp.network.model.User
 import com.sample.sampletestapp.network.retrofit.RetroInstance
 import com.sample.sampletestapp.network.retrofit.RetroServiceUser
@@ -18,14 +15,11 @@ class UserActivityViewModel : ViewModel(){
 
     lateinit var userListData: MutableLiveData<List<User>>
     lateinit var userAdapter: UserAdapter
-    private var APIComponent: APIComponent
 
 
     init{
         userListData = MutableLiveData()
         userAdapter = UserAdapter()
-        APIComponent = DaggerAPIComponent.builder().aPIModule(APIModule()).build()
-
     }
 
     fun getAdapter() : UserAdapter{

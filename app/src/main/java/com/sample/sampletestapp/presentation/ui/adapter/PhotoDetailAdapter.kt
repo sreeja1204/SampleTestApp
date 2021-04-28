@@ -37,35 +37,20 @@ class PhotoDetailAdapter() : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetail
 
     fun updateList(photoList: List<Photo>) {
         this.photoList = photoList
-        //this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoDetailHolder {
-//        val view = LayoutInflater.from(parent.context)
-//            .inflate(R.layout.view_photo_detail_list_item, parent, false)
-//
-//            return PhotoDetailHolder(view)
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ViewPhotoDetailListItemBinding.inflate(layoutInflater)
         return PhotoDetailHolder(binding)
            }
 
-   inner class PhotoDetailHolder(val binding: ViewPhotoDetailListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+   inner class PhotoDetailHolder(val binding: ViewPhotoDetailListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(photo:Photo){
             binding.photo = photo
             binding.executePendingBindings()
-            //view.photo_detail_list_item_title.text = title
-            //DownloadImageForFullImage(view.photo_detail_list_item_image).execute(url)
-
        }
-//        init {
-//            v.setOnClickListener(this)
-//        }
-
-        override fun onClick(v: View) {
-            Log.d("RecyclerView", "CLICK!")
-        }
     }
 
     companion object {
@@ -73,13 +58,6 @@ class PhotoDetailAdapter() : RecyclerView.Adapter<PhotoDetailAdapter.PhotoDetail
         @BindingAdapter("loadImage")
         fun loadImage(thubmImage: ImageView, url: String?) {
             DownloadImageForFullImage(thubmImage).execute(url)
-//            Glide.with(thubmImage)
-//                .load(url)
-//                .circleCrop()
-//                .placeholder(R.drawable.ic_launcher_foreground)
-//                .error(R.drawable.ic_launcher_foreground)
-//                .fallback(R.drawable.ic_launcher_foreground)
-//                .into(thubmImage)
         }
 
     }

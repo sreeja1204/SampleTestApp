@@ -2,17 +2,12 @@ package com.sample.sampletestapp.presentation.ui.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sample.sampletestapp.BR
-import com.sample.sampletestapp.R
 import com.sample.sampletestapp.databinding.ViewUserListItemBinding
 import com.sample.sampletestapp.network.model.User
 import com.sample.sampletestapp.presentation.ui.activity.PhotoActivity
-import kotlinx.android.synthetic.main.view_user_list_item.view.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserHolder>() {
 
@@ -41,16 +36,11 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserHolder>() {
         this.userList = userList
     }
 
-    class UserHolder(val binding: ViewUserListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    class UserHolder(val binding: ViewUserListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(user : User){
             binding.user = user
             binding.executePendingBindings()
-        }
-
-
-        override fun onClick(v: View) {
-            Log.d("RecyclerView", "CLICK!")
         }
     }
 

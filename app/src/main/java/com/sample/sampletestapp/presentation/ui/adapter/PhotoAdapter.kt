@@ -33,8 +33,6 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
         holder.itemView.setOnClickListener { view ->
             val activity = holder.itemView.context as Activity
             val intent = Intent(activity, PhotoDetailActivity::class.java)
-            //intent.putExtra("url",photoList?.get(position)?.url)
-            //intent.putExtra("title",photoList?.get(position)?.title)
             intent.putExtra("albumId", photoList?.get(position)?.albumId)
             intent.putExtra("photoId",photoList?.get(position)?.id)
             view.context.startActivity(intent)
@@ -46,9 +44,6 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
-//        val view = LayoutInflater.from(parent.context)
-//            .inflate(R.layout.view_photo_list_item, parent, false)
-//        return PhotoHolder(view)
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ViewPhotoListItemBinding.inflate(layoutInflater)
@@ -61,21 +56,12 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
         this.notifyDataSetChanged()
     }
 
-    inner class PhotoHolder(val binding: ViewPhotoListItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class PhotoHolder(val binding: ViewPhotoListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindData(photo : Photo){
             binding.photo = photo
             binding.executePendingBindings()
-            //DownloadImageFromThumbnail(view.photo_list_item_image).execute(photo.thumbnailUrl)
         }
-        init {
-           // v.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View) {
-            Log.d("RecyclerView", "CLICK!")
-        }
-
     }
 
     companion object {
@@ -83,13 +69,6 @@ class PhotoAdapter : RecyclerView.Adapter<PhotoAdapter.PhotoHolder>()  {
         @BindingAdapter("loadImage")
         fun loadImage(thubmImage: ImageView, url: String) {
             DownloadImageFromThumbnail(thubmImage).execute(url)
-//            Glide.with(thubmImage)
-//                .load(url)
-//                .circleCrop()
-//                .placeholder(R.drawable.ic_launcher_foreground)
-//                .error(R.drawable.ic_launcher_foreground)
-//                .fallback(R.drawable.ic_launcher_foreground)
-//                .into(thubmImage)
         }
 
     }
